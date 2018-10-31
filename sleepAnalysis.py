@@ -1,4 +1,4 @@
-import sleepGoals from sleepGoals
+from sleepGoals import sleepGoals
 
 def sleepAnalysis ():
     
