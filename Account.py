@@ -30,12 +30,16 @@ def Account():
     intro(name)
     
     
-    valuesconclusion = str("Is this right? " + name + str(intro.str_height) + str(intro.str_weight))
-    conclusion = input(valuesconclusion)
-    if conclusion =="Yes" or conclusion == "yes":
+    valuesconclusion = "Is this right? " + name + " " + str(intro.str_age) + " " + str(intro.str_height) + " " + str(intro.str_weight)
+   
+    conclusion = print(valuesconclusion)
+    conclusion = input()
+    if conclusion == "Yes" or conclusion == "yes":
         print("Perfect, that's all I need")
     else:
-        finalconclusion = input("Uh oh, we have to start over,is that ok?")
+        finalconclusion = print("Uh oh, we have to start over,is that ok?")
+    
+    finalconclusion = input()
     
     if finalconclusion == "yes" or finalconclusion == "Yes" or finalconclusion == "OK" or finalconclusion == "Ok" or finalconclusion == "ok":
         
