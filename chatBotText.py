@@ -117,6 +117,6 @@ if x == "Menu" or x == "menu":
             
 ###### Exercise option: based on the activity and duration of exercise and food, gives an analysis and recomendations for goals created ######        
    
-    if y == "exercise" or y == "Exercise":
+    #if y == "exercise" or y == "Exercise":
         
         
