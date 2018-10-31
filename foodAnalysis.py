@@ -1,4 +1,12 @@
-from food import food
+#from food import food
 
 
-def food analysis ():
+def foodAnalysis ():
+    
+    
+    
+    
+    
+    
+    
+    foodAnalysis ()
