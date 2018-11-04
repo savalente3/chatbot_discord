@@ -56,7 +56,7 @@ if x == "Menu" or x == "menu":
                 #imports the bedtime goals for the user to personalize
                 #from sleepGoals import sleepGoals
             
-            elif a == "Wake up" or a == "wake up":
+            if a == "Wake up" or a == "wake up":
                 #imports wake up goals for the user to set up
                 #from sleepGoals import sleepGoals
         else:
