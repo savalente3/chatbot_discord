@@ -54,14 +54,14 @@ if x == "Menu" or x == "menu":
             
             if a == "bedtime" or a == "BedTime":
                 #imports the bedtime goals for the user to personalize
-                from sleepGoals import sleepGoals
+                #from sleepGoals import sleepGoals
             
-            elif a == "Wake up" or a == "wake up":
+            if a == "Wake up" or a == "wake up":
                 #imports wake up goals for the user to set up
-                from sleepGoals import sleepGoals
+                #from sleepGoals import sleepGoals
         else:
             print ("This is your sleep analysis for the past week")
-            from sleepAnalysis import sleepAnalysis
+            #from sleepAnalysis import sleepAnalysis
     
     
     
@@ -78,16 +78,16 @@ if x == "Menu" or x == "menu":
             #taken from programming and algorithms module week 4 CountPython.py doc
             #checks if the word "today" is in the input given by the user 
             print ("ok, I will pull the hours you've spent playing today,", name)
-            from playtime import playtime
+            #from playtime import playtime
             
         elif a.count(words2) == True:
             #checks if the words "each game" are in the input given by the user 
             print ("ok, I will pull the hours you've spent playing each game ")
-            from playtime import playtime
+            #from playtime import playtime
             
         else:
             print ("These is you playtime analysis for the past week")
-            from playTimeAnalysis import playTimeAnalysis            
+            #from playTimeAnalysis import playTimeAnalysis            
 
 ###### Food option: lets teh user add what he is going to eat and check the calories, recomendations for healthier foods and analysis ######
     
@@ -103,17 +103,17 @@ if x == "Menu" or x == "menu":
             print ("What are you think about eating?")
             a = input ()
             print ("You can eat healthier...")
-            from food import food
+            #from food import food
         
         elif a.count (words2) == True:
             #checks if word calories is in user input and imports data from food file
             print ("These are the calories you have consume today!")
-            from food import food
+            #from food import food
             
         else:
             #imports data analysis from foodAnalysis file
             print("Here is the calory analysis for the week")
-            from foodAnalysis import foodAnalysis
+            #from foodAnalysis import foodAnalysis
             
 ###### Exercise option: based on the activity and duration of exercise and food, gives an analysis and recomendations for goals created ######        
    
