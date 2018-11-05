@@ -1,11 +1,7 @@
-
-
-
-
+##i managed to fuck up a while loop on line 39 and have no idea why its doing an endless loop...
 #Defining function Account#
 def Account():
-    
-    name = input("Tell me about yourself, what is your name? ")
+    name = str(input("Tell me about yourself, what is your name? "))
     def intro(name):
         print("Well hello " + str(name) + "!")
         intro.str_age = float(input("Tell me " + str(name) + " more about you, how old are you? "))
@@ -34,17 +30,22 @@ def Account():
    
     conclusion = print(valuesconclusion)
     conclusion = input()
-    if conclusion == "Yes" or conclusion == "yes":
+    conclusion = conclusion.lower()
+    
+        
+    if conclusion == "yes":
         print("Perfect, that's all I need")
     else:
         finalconclusion = print("Uh oh, we have to start over,is that ok?")
-    
-    finalconclusion = input()
-    
-    if finalconclusion == "yes" or finalconclusion == "Yes" or finalconclusion == "OK" or finalconclusion == "Ok" or finalconclusion == "ok":
-        
-        intro(name)
-    else:
-        print("I didnt love you anyway, you have no friends, good bye.")
+        finalconclusion = input()
+        finalconclusion = finalconclusion.lower()
+        if finalconclusion == "yes" or finalconclusion == "ok" or finalconclusion == "sure":
+            intro(name)
+        else:
+            print("I didnt love you anyway, you have no friends, good bye.")
 
 Account ()    
+
+
+
+
