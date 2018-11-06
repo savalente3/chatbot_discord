@@ -69,28 +69,30 @@ if x == "Menu" or x == "menu":
     
     
     
-###### PlayTime option: hours of playtime, hours of play time by game, recomendations and analysis ######
-
-    if y == "PlayTime" or y == "playtime":
-        print (" Do you want to know your playtime for today or your playtime for each game? ")
-        a = input ()
-        words1 = "today"
-        words2 = "each game"
+###### Game option: hours of playtime, hours of play time by game, recomendations and analysis ######
+    #if y == "game" or y == "Game":
+        #games = input("")
+        #if 
+    #if y == "PlayTime" or y == "playtime":
+        #print (" Do you want to know your playtime for today or your playtime for each game? ")
+        #a = input ()
+        #words1 = "today"
+        #words2 = "each game"
         
         
-        if a.count(words1) == True:
+        #if a.count(words1) == True:
             #taken from programming and algorithms module week 4 CountPython.py doc
             #checks if the word "today" is in the input given by the user 
-            print ("ok, I will pull the hours you've spent playing today,", name)
+            #print ("ok, I will pull the hours you've spent playing today,", name)
             #from playtime import playtime
             
-        elif a.count(words2) == True:
+        #elif a.count(words2) == True:
             #checks if the words "each game" are in the input given by the user 
-            print ("ok, I will pull the hours you've spent playing each game ")
+            #print ("ok, I will pull the hours you've spent playing each game ")
             #from playtime import playtime
             
-        else:
-            print ("These is you playtime analysis for the past week")
+        #else:
+            #print ("These is you playtime analysis for the past week")
             #from playTimeAnalysis import playTimeAnalysis            
 
 ###### Food option: lets teh user add what he is going to eat and check the calories, recomendations for healthier foods and analysis ######
