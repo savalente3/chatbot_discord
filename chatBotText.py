@@ -9,6 +9,9 @@
 #from foodAnalysis import foodAnalysis
 #from playTime import playTime
 #from playTimeAnalysis import playTimeAnalysis
+#from game import game
+
+
 
 
 
@@ -56,9 +59,10 @@ if x == "Menu" or x == "menu":
                 #imports the bedtime goals for the user to personalize
                 #from sleepGoals import sleepGoals
             
-            if a == "Wake up" or a == "wake up":
+            #elif a == "Wake up" or a == "wake up":
                 #imports wake up goals for the user to set up
                 #from sleepGoals import sleepGoals
+                print ("yo")
         else:
             print ("This is your sleep analysis for the past week")
             #from sleepAnalysis import sleepAnalysis
