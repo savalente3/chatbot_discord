@@ -1,18 +1,27 @@
-
-
-import discord
-from discord.ext import commands
+import discord 
 from discord.ext.commands import Bot
-import asyncio
-import chalk
+import asyncio 
+import logging 
+import requests  
 
-bot = commands.Bot(command_prefix='WA')
+BOT_PREFIX = ("/")
+client = Bot(command_prefix=BOT_PREFIX)
 
-@bot.event
-async def on_ready():
-    print ("Ready when you are xd")
-    print ("I am running on " + bot.user.name)
+@client.event 
+async def on_ready():     
+    print("I'm in boooooyyyyyy")     
+    print(client.user.name)  
+
+
+@client.command(pass_context=True)
+async def hi(context):
+    blah = 'hi sophia'
+    await client.say(blah)
+
+    
+
+client.run("NTA5NTA5MzgxOTkwMjUyNTQ0.DsRo4Q.uoTSlmungMtdVKpBXNidEUK6REg")
 
 
 
-Bot.run ("iYk67T-Bjh0JL7Nw7DWK5z7nQfSKbkbx")
+
