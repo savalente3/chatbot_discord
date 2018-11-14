@@ -3,6 +3,7 @@ from lol_api.settings import settings
 import requests
 import json
 import pandas as pd
+import unittest
 
 """ Info for APIs KEYS"""
 
@@ -110,6 +111,8 @@ def summonerbyname():
     print ("Summoner Level: ", data["summonerLevel"])
     print ("summoner ID: ", data["id"])
     print ("Account ID: ", data["accountId"])
+
+
   else:
     print ("Error: Select a valid region")  
     
@@ -119,6 +122,8 @@ summonerbyname()
 summoner_ID = summonerbyname.summoner_ID
 account_ID = summonerbyname.account_ID
 region = summonerbyname.region
+
+    
 
 
 def mastery1 (summoner_ID):
@@ -148,6 +153,8 @@ def mastery1 (summoner_ID):
       
    table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
    print(table)
+
+ 
     
 
  else:
@@ -159,6 +166,7 @@ def mastery1 (summoner_ID):
       
       
    #else:
+    #return to main menu
      
 
 mastery1 (str(summoner_ID))
@@ -173,6 +181,7 @@ def mastery2 (summoner_ID):
   
   print ("Your total champion mastery score: ", data)
 
+ 
 
 mastery2 (str(summoner_ID))
 
@@ -187,13 +196,15 @@ def matchList(account_ID):
    
     URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
     data = pd.read_json(URL_match)
-    data1 = data[1:16]
-    matches = data[0:1]["matches"]
+    data1 = data[0:1]
+    matches = data[1:16]["matches"]
 
     lane = []
     champion = []
     season = []
     role = []
+
+  
 
     i = 1
     while i < len(matches):
@@ -230,6 +241,11 @@ def matchList(account_ID):
       return matchList (str(account_ID))
       
 matchList (str(account_ID))
+
+
+
+if __name__ == '__main__':
+      print (data.status_code)
 
 
 
