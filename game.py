@@ -3,7 +3,7 @@ from lol_api.settings import settings
 import requests
 import json
 import pandas as pd
-import unittest
+
 
 """ Info for APIs KEYS"""
 
@@ -12,7 +12,7 @@ import unittest
 #API for private project
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-2a8af070-070a-4eca-ab43-238e53711d90"
+personalAPI_KEY = "RGAPI-c94297ca-8b5e-4044-9c43-656ac546986c"
 
 #settings.API_KEY = "RGAPI-1624b46c-8d36-44f6-b4a6-15b84356c913"
 #settings.REGION_DEFAULT = 'eune'
@@ -64,13 +64,12 @@ personalAPI_KEY = "RGAPI-2a8af070-070a-4eca-ab43-238e53711d90"
 #Get list of featured games
 #"https://eun1.api.riotgames.com//lol/spectator/v3/featured-games" + "?api_key=" + personalAPI_KEY 
 
+list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
+
 print ("Tell me your Summoner Name, please")
 summoner_Name = input("")
 
-def summonerbyname():
-  #https://www.youtube.com/watch?v=QovKok-2u9k 
-  #get summoner by summoner name
-
+def getRegion():
   print ("Select region")
 
   br = "br1"	
@@ -97,47 +96,51 @@ def summonerbyname():
   print(tr.center (40))
   print(ru.center (40))
 
-  s = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]  
-  summonerbyname.region = input("") 
+  region = input("")
 
-  if summonerbyname.region in s:  
-    URL_summonerbyname = "https://" + summonerbyname.region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_Name + "?api_key=" + personalAPI_KEY
+  return region
+
+region = getRegion()
+summoner_ID = ""
+account_ID = ""
+
+
+def summonerbyname():
+ 
+ #get summoner by summoner name
+
+  if region in list_of_regions:  
+    URL_summonerbyname = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_Name + "?api_key=" + personalAPI_KEY
+    #http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
     response = requests.get(URL_summonerbyname)
     data = response.json()
+  
 
     #print the info and store summoner ID and account ID
-    summonerbyname.summoner_ID = (data["id"])
-    summonerbyname.account_ID = (data["accountId"])
+    summoner_ID = (data["id"])
+    account_ID = (data["accountId"])
     print ("Summoner Level: ", data["summonerLevel"])
-    print ("summoner ID: ", data["id"])
-    print ("Account ID: ", data["accountId"])
+    print ("summoner ID: ", summoner_ID)
+    print ("Account ID: ", account_ID)
 
-
-  else:
-    print ("Error: Select a valid region")  
     
 
-  
+    
+
 summonerbyname()
-summoner_ID = summonerbyname.summoner_ID
-account_ID = summonerbyname.account_ID
-region = summonerbyname.region
+
 
     
 
 
 def mastery1 (summoner_ID):
  #Get all champion mastery entries sorted by number of champion points descending
-
- print ("Do you want to see your Champion mastery, ", summoner_Name,"?")
- answer = input() 
- if answer.count ("yes") == True or answer.count ("Yes") == True: 
    
    URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID+ "?api_key=" + personalAPI_KEY
     
     
    #pandas library: organizes info from API into table 
-   #https://pandas.pydata.org/pandas-docs/stable/install.html
+   #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
    data = pd.read_json(URL_mastery1)
 
    #formating List from json 
@@ -153,21 +156,8 @@ def mastery1 (summoner_ID):
       
    table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
    print(table)
-
+#######################################################################################
  
-    
-
- else:
-   print ("Do you want to leave?")
-   answer = input ()
-   while answer == "no":
-  
-       return (summonerbyname(), mastery1(str(summoner_ID)), mastery2(str(summoner_ID)), matchList(str(account_ID)))
-      
-      
-   #else:
-    #return to main menu
-     
 
 mastery1 (str(summoner_ID))
 
@@ -189,64 +179,37 @@ mastery2 (str(summoner_ID))
 
 def matchList(account_ID):
  #Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
- print("Do you want to see your match lists? ")
- matchanswer = input ()
-
- if matchanswer.count ("Yes") or matchanswer.count ("yes"):
    
-    URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
-    data = pd.read_json(URL_match)
-    data1 = data[0:1]
-    matches = data[1:16]["matches"]
+ URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
+ data = pd.read_json(URL_match)
+ data1 = data[0:1]
+ matches = data[1:16]["matches"]
 
-    lane = []
-    champion = []
-    season = []
-    role = []
+ lane = []
+ champion = []
+ season = []
+ role = []
 
-  
+ i = 1
+ while i < len(matches):
 
-    i = 1
-    while i < len(matches):
+   lane.append(matches[i]["lane"])
+   champion.append(matches[i]["champion"])
+   season.append(matches[i]["season"])
+   role.append(matches[i]["role"])
+   i = i + 1
 
-      lane.append(matches[i]["lane"])
-      champion.append(matches[i]["champion"])
-      season.append(matches[i]["season"])
-      role.append(matches[i]["role"])
-      i = i + 1
+ table = pd.DataFrame({"lane": lane, "champion": champion, "season":season, "role": role})
+ print (table)
+ print()
 
-    table = pd.DataFrame({"lane": lane, "champion": champion, "season":season, "role": role})
-    print (table)
-    print()
-    print("Total Games")
-    print(data1.totalGames)
-  
- if matchanswer.count ("no") or matchanswer.count ("No"):
-    print("Do you wanto to go back to Champion mastery list or to the beginning?")
-    answer = input ()
-    
-    if answer.count ("champion"):
-      return mastery1 (summoner_ID)
+ #Total of games
+ print("Total Games")
+ print(data1.totalGames)
 
-    
-    if answer.count ("beginning"):
-     return(summonerbyname(), mastery1(str(summoner_ID)), mastery2 (str(summoner_ID)), matchList (str(account_ID)))
-
-    #else:
-      #main menu
-
-    else:
-      print("sorry, Whaaaaaat?")
-
-      return matchList (str(account_ID))
+ 
       
 matchList (str(account_ID))
-
-
-
-if __name__ == '__main__':
-      print (data.status_code)
-
 
 
 
