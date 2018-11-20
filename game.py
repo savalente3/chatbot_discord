@@ -179,8 +179,6 @@ mastery2 (str(summoner_ID))
 
 def matchList(account_ID):
  #Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
- print("Do you want to see your match lists? ")
- matchanswer = input ()
    
  URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
  data = pd.read_json(URL_match)
@@ -191,8 +189,6 @@ def matchList(account_ID):
  champion = []
  season = []
  role = []
-
-
 
  i = 1
  while i < len(matches):
