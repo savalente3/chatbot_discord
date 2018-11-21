@@ -37,7 +37,7 @@ async def on_message(message):
 		await bot.send_message(message.channel, "That is such a cool name! Can you please, now tell me your region?")
 		regions_display = discord.Embed(
 			title = 'Regions',
-			description = 'Choose one of the Regions listed bellow:',
+			description = 'Choose one of the Regions listed bellow:'
 		)
 
 		regions_display.add_field(name = 'Region 1', value = 'br1' , inline = False)
@@ -47,10 +47,10 @@ async def on_message(message):
 		regions_display.add_field(name = 'Region 5', value = 'kr'  , inline = False)
 		regions_display.add_field(name = 'Region 6', value = 'la1' , inline = False)
 		regions_display.add_field(name = 'Region 7', value = 'la2' , inline = False)
-		regions_display.add_field(name = 'Region 7', value = 'na1' , inline = False)
-		regions_display.add_field(name = 'Region 7', value = 'oc1' , inline = False)
-		regions_display.add_field(name = 'Region 7', value = 'tr1' , inline = False)
-		regions_display.add_field(name = 'Region 7', value = 'ru'  , inline = False)
+		regions_display.add_field(name = 'Region 8', value = 'na1' , inline = False)
+		regions_display.add_field(name = 'Region 9', value = 'oc1' , inline = False)
+		regions_display.add_field(name = 'Region 10', value = 'tr1', inline = False)
+		regions_display.add_field(name = 'Region 11', value = 'ru' , inline = False)
 
 		await bot.send_message(message.channel, embed = regions_display)
 
