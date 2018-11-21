@@ -1,11 +1,90 @@
+#In this file the code is being edited in order to work on the discord chat instead of the terminal
 
-
+import discord
+from discord.ext import commands
+from discord.ext.commands import Bot
+import asyncio
 from lol_api.settings import settings
 import requests
 import json
 import pandas as pd
 
+#API for private project
+API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
+#API for developers has durantion of 24h
+personalAPI_KEY = "RGAPI-c94297ca-8b5e-4044-9c43-656ac546986c"
 
+
+bot = commands.Bot(command_prefix='#')
+regionname = ""
+
+@bot.event
+async def on_ready():
+	print("Have no fear, Chappie is here!")
+	print("My user name is " + bot.user.name)
+	print("My bot user id is " + bot.user.id)
+
+
+@bot.event
+async def on_message(message):
+	if "hello" in message.content:
+		await bot.send_message(message.channel, """My name is GHP. What is your summoner name? I am quite a stupid robot, so please start the message with "summoner: " followed by your summoner name.""")
+
+	if message.content.startswith('summoner: '):
+		summoner_name = message.content
+		summoner_name = summoner_name.replace("summoner: ", "")
+		print(summoner_name)
+		await bot.send_message(message.channel, "That is such a cool name! Can you please, now tell me your region?")
+		regions_display = discord.Embed(
+			title = 'Regions',
+			description = 'Choose one of the Regions listed bellow:',
+		)
+
+		regions_display.add_field(name = 'Region 1', value = 'br1' , inline = False)
+		regions_display.add_field(name = 'Region 2', value = 'eun1', inline = False)
+		regions_display.add_field(name = 'Region 3', value = 'euw1', inline = False)
+		regions_display.add_field(name = 'Region 4', value = 'jp1' , inline = False)
+		regions_display.add_field(name = 'Region 5', value = 'kr'  , inline = False)
+		regions_display.add_field(name = 'Region 6', value = 'la1' , inline = False)
+		regions_display.add_field(name = 'Region 7', value = 'la2' , inline = False)
+		regions_display.add_field(name = 'Region 7', value = 'na1' , inline = False)
+		regions_display.add_field(name = 'Region 7', value = 'oc1' , inline = False)
+		regions_display.add_field(name = 'Region 7', value = 'tr1' , inline = False)
+		regions_display.add_field(name = 'Region 7', value = 'ru'  , inline = False)
+
+		await bot.send_message(message.channel, embed = regions_display)
+
+		regions_list = ['br1', 'eun1', 'euw1', 'jp1', 'kr', 'la1', 'la2', 'na1', 'oc1', 'tr1', 'ru']
+
+		region = await bot.wait_for_message(author = message.author)
+
+		# verifies if the message has been sent by the user
+		#regionname is the variable that will hold the value inserted by the user 
+		if region:
+			for i in range(len(regions_list)):
+				if region.content == regions_list[i]:
+					regionname = region.content
+					print(regionname)
+					await bot.send_message(message.channel, """Thank you for inserting your region's value""")
+				i += 1
+		if regionname != "":
+			URL_summonerbyname = "https://" + regionname + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_name + "?api_key=" + personalAPI_KEY
+		    #http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
+			response = requests.get(URL_summonerbyname)
+			data = response.json()
+			#print the info and store summoner ID and account ID
+			summoner_ID = (data["id"])
+			account_ID = (data["accountId"])
+			print ("Summoner Level: ", data["summonerLevel"])
+			print ("summoner ID: ", summoner_ID)
+			print ("Account ID: ", account_ID)
+
+bot.run("NTA2OTgzMDY1NTUwMzIzNzIy.DsEzyg.WzxYWzRFJxxxnuABTNU8Vo8tmLk")
+
+
+
+
+'''
 """ Info for APIs KEYS"""
 
 #REgion endpoint
@@ -66,6 +145,7 @@ personalAPI_KEY = "RGAPI-c94297ca-8b5e-4044-9c43-656ac546986c"
 #"https://eun1.api.riotgames.com//lol/spectator/v3/featured-games" + "?api_key=" + personalAPI_KEY 
 
 list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
+
 
 print ("Tell me your Summoner Name, please")
 summoner_Name = input("")
@@ -212,6 +292,4 @@ def matchList(account_ID):
       
 matchList (str(account_ID))
 
-
-
-
+'''
