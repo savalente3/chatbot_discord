@@ -12,7 +12,7 @@ import pandas as pd
 #API for private project
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-c94297ca-8b5e-4044-9c43-656ac546986c"
+personalAPI_KEY = "RGAPI-ae2625d7-d293-4665-af56-a1f96c9dea17"
 
 #settings.API_KEY = "RGAPI-1624b46c-8d36-44f6-b4a6-15b84356c913"
 #settings.REGION_DEFAULT = 'eune'
@@ -101,66 +101,86 @@ def getRegion():
   return region
 
 region = getRegion()
-summoner_ID = ""
-account_ID = ""
 
 
 def summonerbyname():
- 
  #get summoner by summoner name
 
   if region in list_of_regions:  
     URL_summonerbyname = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_Name + "?api_key=" + personalAPI_KEY
+    
     #http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
     response = requests.get(URL_summonerbyname)
     data = response.json()
   
 
     #print the info and store summoner ID and account ID
-    summoner_ID = (data["id"])
-    account_ID = (data["accountId"])
+    summonerbyname.summoner_ID = (data["id"])
+    summonerbyname.account_ID = (data["accountId"])
     print ("Summoner Level: ", data["summonerLevel"])
-    print ("summoner ID: ", summoner_ID)
-    print ("Account ID: ", account_ID)
-
-    
-
-    
-
-summonerbyname()
-
-
-    
-
-
-def mastery1 (summoner_ID):
- #Get all champion mastery entries sorted by number of champion points descending
+    print ("summoner ID: ", data["id"])
+    print ("Account ID: ", data["accountId"])
    
-   URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID+ "?api_key=" + personalAPI_KEY
-    
-    
+summonerbyname()
+summoner_ID = summonerbyname.summoner_ID
+account_ID = summonerbyname.account_ID
+
+
+def mastery1 (summoner_ID, region):
+ 
+   #Get all champion mastery entries sorted by number of champion points descending 
+   URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
+   
+   #get the champion name from champion id 
+   URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
+
+   
+   #get the image of each champion by champion name 
+   championImage = []
+   #URL_championImage = "http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + championImage + ".png"
+   
    #pandas library: organizes info from API into table 
    #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
    data = pd.read_json(URL_mastery1)
+   data1 = pd.read_json(URL_championName)
+   champ = data1 ["data"]
+   #champIM = pd.read_json(URL_championImage)
 
    #formating List from json 
    #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
-   mastery = data[1:16]
-  
+   mastery = data[0:15]
+
 
    championLevel = mastery.championLevel
    championPoints = mastery.championPoints
    tokensEarned = mastery.tokensEarned
+   championId = mastery.championId
    championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
-  
-      
-   table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+   
+   
+   championName = []
+   
+   for id in championId:
+     for i in champ:
+       if str(id) == i["key"]:
+         championName.append(i["name"])
+
+   
+   for i in champ:
+     for id in championId:
+       if i["key"] == str(id):
+        championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
+   
+   
+   table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+
    print(table)
+
 #######################################################################################
  
 
-mastery1 (str(summoner_ID))
-
+mastery1 ("65978111","euw1")
+"""
 
 def mastery2 (summoner_ID):
   #Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
@@ -209,7 +229,7 @@ def matchList(account_ID):
 
  
       
-matchList (str(account_ID))
+matchList (str(account_ID))"""
 
 
 
