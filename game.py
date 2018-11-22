@@ -63,7 +63,7 @@ personalAPI_KEY = "RGAPI-263c8797-b178-45d8-94f6-01cf7670ff99"
 
 #Get list of featured games
 #"https://eun1.api.riotgames.com//lol/spectator/v3/featured-games" + "?api_key=" + personalAPI_KEY 
-"""
+
 list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
 
 print ("Tell me your Summoner Name, please")
@@ -194,7 +194,6 @@ def mastery2 (summoner_ID):
  
 
 mastery2 (str(summoner_ID))
-"""
 
 
 def matchList(account_ID, region):
