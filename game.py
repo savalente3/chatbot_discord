@@ -12,7 +12,7 @@ import pandas as pd
 #API for private project
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-ae2625d7-d293-4665-af56-a1f96c9dea17"
+personalAPI_KEY = "RGAPI-263c8797-b178-45d8-94f6-01cf7670ff99"
 
 #settings.API_KEY = "RGAPI-1624b46c-8d36-44f6-b4a6-15b84356c913"
 #settings.REGION_DEFAULT = 'eune'
@@ -63,7 +63,7 @@ personalAPI_KEY = "RGAPI-ae2625d7-d293-4665-af56-a1f96c9dea17"
 
 #Get list of featured games
 #"https://eun1.api.riotgames.com//lol/spectator/v3/featured-games" + "?api_key=" + personalAPI_KEY 
-
+"""
 list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
 
 print ("Tell me your Summoner Name, please")
@@ -126,7 +126,7 @@ summoner_ID = summonerbyname.summoner_ID
 account_ID = summonerbyname.account_ID
 
 
-def mastery1 (summoner_ID, region):
+def mastery1 (summoner_ID):
  
    #Get all champion mastery entries sorted by number of champion points descending 
    URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
@@ -135,9 +135,7 @@ def mastery1 (summoner_ID, region):
    URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
 
    
-   #get the image of each champion by champion name 
-   championImage = []
-   #URL_championImage = "http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + championImage + ".png"
+   
    
    #pandas library: organizes info from API into table 
    #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
@@ -157,7 +155,7 @@ def mastery1 (summoner_ID, region):
    championId = mastery.championId
    championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
    
-   
+   championImage = []
    championName = []
    
    for id in championId:
@@ -169,18 +167,20 @@ def mastery1 (summoner_ID, region):
    for i in champ:
      for id in championId:
        if i["key"] == str(id):
+        #get the image of each champion by champion name 
         championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
    
    
    table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+   
 
    print(table)
 
 #######################################################################################
  
 
-mastery1 ("65978111","euw1")
-"""
+mastery1 (str(summoner_ID))
+
 
 def mastery2 (summoner_ID):
   #Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
@@ -194,16 +194,16 @@ def mastery2 (summoner_ID):
  
 
 mastery2 (str(summoner_ID))
+"""
 
 
-
-def matchList(account_ID):
+def matchList(account_ID, region):
  #Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
    
  URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
  data = pd.read_json(URL_match)
  data1 = data[0:1]
- matches = data[1:16]["matches"]
+ matches = data[0:16]["matches"]
 
  lane = []
  champion = []
@@ -219,18 +219,41 @@ def matchList(account_ID):
    role.append(matches[i]["role"])
    i = i + 1
 
- table = pd.DataFrame({"lane": lane, "champion": champion, "season":season, "role": role})
+ #get the champion name from champion id 
+ URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
+ data2 = pd.read_json(URL_championName)
+ champ = data2 ["data"]
+
+ championImage = []
+ championName = []
+
+ for id in champion:
+   for i in champ:
+     if str(id) == i["key"]:
+       championName.append(i["name"])
+
+
+ for i in champ:
+     for id in champion:
+       if i["key"] == str(id):
+         #get the image of each champion by champion name 
+         championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
+   
+
+
+ print(type(championName))
+ print(type(lane))
+ print(type(season))
+ print(type(role))
+ print(type(champion))
+ table = pd.DataFrame({"Champion":championImage, "champion Name": championName,"lane": lane, "season":season, "role": role})
  print (table)
- print()
-
+ #print()
+ 
  #Total of games
- print("Total Games")
- print(data1.totalGames)
-
+ #print("Total Games")
+ #print(data1.totalGames)
  
       
-matchList (str(account_ID))"""
-
-
-
+matchList("216952281", "euw1")
 
