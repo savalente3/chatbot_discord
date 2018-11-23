@@ -233,19 +233,13 @@ def matchList(account_ID, region):
          championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
    
 
-
- print(type(championName))
- print(type(lane))
- print(type(season))
- print(type(role))
- print(type(champion))
  table = pd.DataFrame({"Champion":championImage, "champion Name": championName,"lane": lane, "season":season, "role": role})
  print (table)
  #print()
  
  #Total of games
- #print("Total Games")
- #print(data1.totalGames)
+ print("Total Games")
+ print(data1.totalGames)
  
       
 matchList("216952281", "euw1")
