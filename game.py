@@ -9,16 +9,10 @@ import pandas as pd
 
 #REgion endpoint
 #EUNE	// EUN1	// eun1.api.riotgames.com
-#API for private project
+#API for private project(I've applied, but doesnt work)
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
 personalAPI_KEY = "RGAPI-263c8797-b178-45d8-94f6-01cf7670ff99"
-
-#settings.API_KEY = "RGAPI-1624b46c-8d36-44f6-b4a6-15b84356c913"
-#settings.REGION_DEFAULT = 'eune'
-
-
-#data = champion(champion_id=2)
 
 
 """URL APIs LOL"""
