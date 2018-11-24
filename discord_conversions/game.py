@@ -101,18 +101,6 @@ async def on_message(message):
 			title = 'Regions',
 			description = 'Choose one of the Regions listed bellow:'
 		)
-
-		'''regions_display.add_field(name = 'Region 1', value = 'br1' , inline = False)
-		regions_display.add_field(name = 'Region 2', value = 'eun1', inline = False)
-		regions_display.add_field(name = 'Region 3', value = 'euw1', inline = False)
-		regions_display.add_field(name = 'Region 4', value = 'jp1' , inline = False)
-		regions_display.add_field(name = 'Region 5', value = 'kr'  , inline = False)
-		regions_display.add_field(name = 'Region 6', value = 'la1' , inline = False)
-		regions_display.add_field(name = 'Region 7', value = 'la2' , inline = False)
-		regions_display.add_field(name = 'Region 8', value = 'na1' , inline = False)
-		regions_display.add_field(name = 'Region 9', value = 'oc1' , inline = False)
-		regions_display.add_field(name = 'Region 10', value = 'tr1', inline = False)
-		regions_display.add_field(name = 'Region 11', value = 'ru' , inline = False)'''
     
 		for count,region in enumerate(regions_list):
 			regions_display.add_field(name="Region {}".format(count+1), value=region, inline=False)
@@ -122,25 +110,91 @@ async def on_message(message):
 		region = await bot.wait_for_message(author = message.author)
 
 		# verifies if the message has been sent by the user
-		#regionname is the variable that will hold the value inserted by the user 
+		# regionname is the variable that will hold the value of region inserted by the user 
 		if region:
+			if region.content not in regions_list:
+				await bot.send_message(message.channel, "That is not a valid region.")
+				await bot.send_message(message.channel, embed = regions_display)
+				region = await bot.wait_for_message(author = message.author)
+
 			for i in range(len(regions_list)):
 				if region.content == regions_list[i]:
 					regionname = region.content
 					print(regionname)
 					await bot.send_message(message.channel, """Thank you for inserting your region's value""")
 				i += 1
+		
+		# Here it is the equivalent as what you have from line 109 forward, I just changed the type of verification
 		if regionname != "":
 			URL_summonerbyname = "https://" + regionname + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_name + "?api_key=" + personalAPI_KEY
-				#http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
+
+			#http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
 			response = requests.get(URL_summonerbyname)
 			data = response.json()
+
+
 			#print the info and store summoner ID and account ID
 			summoner_ID = (data["id"])
 			account_ID = (data["accountId"])
 			print ("Summoner Level: ", data["summonerLevel"])
-			print ("summoner ID: ", summoner_ID)
-			print ("Account ID: ", account_ID)
+			print ("summoner ID: ", data["id"])
+			print ("Account ID: ", data["accountId"])
+
+			mastery1 ("65978111","euw1")
+
+
+def mastery1 (summoner_ID, regionname):
+ 
+   #Get all champion mastery entries sorted by number of champion points descending 
+   URL_mastery1 = "https://" + regionname + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
+   
+   #get the champion name from champion id 
+   URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
+
+   
+   #get the image of each champion by champion name 
+   championImage = []
+   #URL_championImage = "http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + championImage + ".png"
+   
+   #pandas library: organizes info from API into table 
+   #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
+   data = pd.read_json(URL_mastery1)
+   data1 = pd.read_json(URL_championName)
+   champ = data1 ["data"]
+   #champIM = pd.read_json(URL_championImage)
+
+   #formating List from json 
+   #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
+   mastery = data[0:15]
+
+
+   championLevel = mastery.championLevel
+   championPoints = mastery.championPoints
+   tokensEarned = mastery.tokensEarned
+   championId = mastery.championId
+   championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
+   
+   
+   championName = []
+   
+   for id in championId:
+     for i in champ:
+       if str(id) == i["key"]:
+         championName.append(i["name"])
+
+   
+   for i in champ:
+     for id in championId:
+       if i["key"] == str(id):
+        championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
+   
+   
+   table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+
+   print(table)
+
+#######################################################################################
+ 
 
 bot.run("NTA2OTgzMDY1NTUwMzIzNzIy.DsEzyg.WzxYWzRFJxxxnuABTNU8Vo8tmLk")
 
