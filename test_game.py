@@ -1,17 +1,11 @@
 import pytest
 import game
 
-#class TestStringMethods(unittest.TestCase):
-    
-    
-    def test_getRegion(self):
-        region = game.getRegion("euw1")
-        self.assertIn(region,["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"] )
-   
+summoner_Name = "wrborges"
+list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
+
+def test_summonerbyname():
+    assert game.summonerbyname() == "wrborges"
 
 
 
-
-if __name__ == "__main__":
-    test_getRegion(self)
-    print("Everything passed")
