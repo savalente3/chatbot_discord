@@ -12,7 +12,7 @@ import pandas as pd
 #API for private project
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-02fc46e7-7d93-42d2-9148-ba82778f9a3c"
+personalAPI_KEY = "RGAPI-2908a5b6-bc48-4f91-864f-f58b4f11f764"
 
 #settings.API_KEY = "RGAPI-1624b46c-8d36-44f6-b4a6-15b84356c913"
 #settings.REGION_DEFAULT = 'eune'
@@ -64,9 +64,6 @@ personalAPI_KEY = "RGAPI-02fc46e7-7d93-42d2-9148-ba82778f9a3c"
 #Get list of featured games
 #"https://eun1.api.riotgames.com//lol/spectator/v3/featured-games" + "?api_key=" + personalAPI_KEY 
 
-region_name = ""
-summoner_ID = str(summonerbyname.summoner_ID)
-account_ID = summonerbyname.account_ID
 regions_list = ['br1', 'eun1', 'euw1', 'jp1', 'kr', 'la1', 'la2', 'na1', 'oc1', 'tr1', 'ru']
 i= 0
 
@@ -87,11 +84,12 @@ def summonerbyname(summoner_name, region_name):
 		print ("Summoner Level: ", data["summonerLevel"])
 		print ("summoner ID: ", data["id"])
 		print ("Account ID: ", data["accountId"])
+	
+	
 
 
 
-
-def mastery1 (summoner_ID):
+def mastery1 (summoner_ID, region_name):
  
 	#Get all champion mastery entries sorted by number of champion points descending 
 	URL_mastery1 = "https://" + region_name + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
@@ -143,7 +141,7 @@ def mastery1 (summoner_ID):
 
 
 
-def mastery2 (summoner_ID):
+def mastery2 (summoner_ID, region_name):
   #Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
   
 	URL_mastery2 = "https://" + region_name + ".api.riotgames.com/lol/champion-mastery/v3/scores/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
@@ -206,10 +204,10 @@ def matchList(account_ID, region):
  
 	#Total of games
 	print("Total Games")
-	print(data1.totalGames)
+	return(print(data1.totalGames))
  
       
-matchList("216952281", "euw1")
+#matchList("216952281", "euw1")
 
 
 '''
