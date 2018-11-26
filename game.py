@@ -191,7 +191,7 @@ def mastery2 (summoner_ID):
 mastery2 (str(summoner_ID))
 
 
-def matchList(account_ID, region):
+def matchList(account_ID):
  #Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
    
  URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
@@ -243,7 +243,7 @@ def matchList(account_ID, region):
  print(data1.totalGames)
  
       
-matchList("216952281", "euw1")
+matchList(str(account_ID))
 
 
 

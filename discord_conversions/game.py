@@ -146,7 +146,6 @@ bot.run("NTA2OTgzMDY1NTUwMzIzNzIy.DsEzyg.WzxYWzRFJxxxnuABTNU8Vo8tmLk")
 
 
 
-
 '''
 
 list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
@@ -211,12 +210,8 @@ def summonerbyname():
 
 		
 
-		
-
 summonerbyname()
 
-
-		
 
 
 def mastery1 (summoner_ID):

@@ -121,8 +121,10 @@ if x == "Menu" or x == "menu":
             print("Here is the calory analysis for the week")
             #from foodAnalysis import foodAnalysis
             
-###### Exercise option: based on the activity and duration of exercise and food, gives an analysis and recomendations for goals created ######        
-   
-    #if y == "exercise" or y == "Exercise":
+
         
         
+
+
+
+
