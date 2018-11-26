@@ -148,17 +148,17 @@ def mastery2 (summoner_ID, region_name):
 	response = requests.get(URL_mastery2)
 	data = response.json()
   
-	print ("Your total champion mastery score: ", data)
+	mastery2.result = "Total champion mastery score: " + str(data)
 
  
 
 
 
 
-def matchList(account_ID, region):
+def matchList(account_ID, region_name):
 	#Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
    
-	URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
+	URL_match = "https://" + region_name + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
 	data = pd.read_json(URL_match)
 	data1 = data[0:1]
 	matches = data[0:16]["matches"]
@@ -203,8 +203,8 @@ def matchList(account_ID, region):
 	#print()
  
 	#Total of games
-	print("Total Games")
-	return(print(data1.totalGames))
+	matchList.total_games = "Total Games:" + str(data1.totalGames)
+	
  
       
 #matchList("216952281", "euw1")
