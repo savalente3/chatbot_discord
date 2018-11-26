@@ -1,17 +1,30 @@
-##i managed to fuck up a while loop on line 39 and have no idea why its doing an endless loop...
 #Defining function Account#
+
+import discord
+from discord.ext import commands
+from discord.ext.commands import Bot
+import asyncio
+
+bot = commands.Bot(command_prefix='#')
+
+@bot.event
+async def on_ready():
+    print("Have no fear, Chappie is here!")
+    print("My user name is " + bot.user.name)
+    print("My bot user id is " + bot.user.id)
 
 @bot.event
 async def on_message(message):
     if "hello" in message.content:
-        await bot.send_message(message.channel, "Hello, my name is GHP. I hope you are willing to share your information with me. What is your name?")
+        await bot.send_message(message.channel, "Hello, my name is GHP. Tell me more about yourself, what is your name?")
         name  = await bot.wait_for_message(author = message.author)
-        await bot.send_message(message.channel, "What is your weight?")
-        weight = await bot.wait_for_message(author = message.author)
-        await bot.send_message(message.channel, "What is your height?")
-        height = await bot.wait_for_message(author = message.author)
         await bot.send_message(message.channel, "How old are you?")
         age = await bot.wait_for_message(author = message.author)
+        await bot.send_message(message.channel, "What is your height in centimeters?")
+        height = await bot.wait_for_message(author = message.author)
+        await bot.send_message(message.channel, """Lastly I need your weight, no need to have shame, I'm a bot, I won't judge... """)
+        weight = await bot.wait_for_message(author = message.author)
+        await bot.send_message(message.channel, "Alright, I think I have everything I need! Thank you!")
 
 def Account():
     name = str(input("Tell me about yourself, what is your name? "))

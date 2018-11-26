@@ -44,8 +44,13 @@ def sleepW():
  print("7h and 30 min of sleep:", W5C)
  print("9h of sleep:", W6C)
 
+ 
+ print("How many hours are you to sleep?")
+ sleepW.sleep = input()
+ 
  return  W3C, W4C, W5C, W6C
 
+sleep = sleepW.sleep
 sleepW()
 
 
@@ -87,8 +92,13 @@ def sleepB():
  print("7h and 30 min of sleep:", W5C)
  print("9h of sleep:", W6C)
 
+ print("How many hours are you to sleep?")
+ sleepB.sleep = input()
+
  return  W3C, W4C, W5C, W6C
 
+sleep = sleepB.sleep 
 sleepB()
+
 
 
