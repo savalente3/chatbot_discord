@@ -3,11 +3,7 @@ from lol_api.settings import settings
 import requests
 import json
 import pandas as pd
-from pandas.tools.plotting import table
 import matplotlib.pyplot as plt
-
-
-
 
 
 """ Info for APIs KEYS"""
@@ -17,7 +13,7 @@ import matplotlib.pyplot as plt
 #API for private project(I've applied, but doesnt work)
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-2908a5b6-bc48-4f91-864f-f58b4f11f764"
+personalAPI_KEY = "RGAPI-65d69b8f-305e-492d-8dea-da690394c08d"
 
 
 """URL APIs LOL"""
@@ -171,20 +167,8 @@ def mastery1 (summoner_ID):
         championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
    
    
-   Champtable = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+   table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
    
-   #ax = Champtable.plot()
-   #fig = ax.get_figure()
-   #fig.savefig('mastery1.png')
-
-   ax = plt.subplot(111, frame_on=False) # no visible frame
-   ax.xaxis.set_visible(False)  # hide the x axis
-   ax.yaxis.set_visible(False)  # hide the y axis
-
-   table(ax, df)  # where df is your data frame
-
-   plt.savefig('mytable.png')
-
 
    print(table)
 
@@ -253,7 +237,7 @@ def matchList(account_ID):
 
  table = pd.DataFrame({"Champion":championImage, "champion Name": championName,"lane": lane, "season":season, "role": role})
  print (table)
- #print()
+
  
  #Total of games
  print("Total Games")
