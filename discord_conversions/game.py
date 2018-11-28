@@ -272,12 +272,65 @@ async def on_message(message):
 				title = "LOL stats table"
 			)
 
+<<<<<<< HEAD
+'''
+
+list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
+=======
 			table_display.add_field(name=table, value = table, inline = False)
 			await bot.send_message(message.channel, table, embed = table_display)
+>>>>>>> 2a9d49142fa4a66de12b5557e2171cb382ff449e
 
 
 def mastery1 (summoner_ID, regionname):
  
+<<<<<<< HEAD
+ #get summoner by summoner name
+
+	if region in list_of_regions:  
+		URL_summonerbyname = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_Name + "?api_key=" + personalAPI_KEY
+		#http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
+		response = requests.get(URL_summonerbyname)
+		data = response.json()
+	
+
+		#print the info and store summoner ID and account ID
+		summoner_ID = (data["id"])
+		account_ID = (data["accountId"])
+		print ("Summoner Level: ", data["summonerLevel"])
+		print ("summoner ID: ", summoner_ID)
+		print ("Account ID: ", account_ID)
+
+		
+
+summonerbyname()
+
+
+
+def mastery1 (summoner_ID):
+ #Get all champion mastery entries sorted by number of champion points descending
+	 
+	 URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID+ "?api_key=" + personalAPI_KEY
+		
+		
+	 #pandas library: organizes info from API into table 
+	 #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
+	 data = pd.read_json(URL_mastery1)
+
+	 #formating List from json 
+	 #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
+	 mastery = data[1:16]
+	
+
+	 championLevel = mastery.championLevel
+	 championPoints = mastery.championPoints
+	 tokensEarned = mastery.tokensEarned
+	 championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
+	
+			
+	 table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+	 print(table)
+=======
    #Get all champion mastery entries sorted by number of champion points descending 
    URL_mastery1 = "https://" + regionname + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
    
@@ -326,6 +379,7 @@ def mastery1 (summoner_ID, regionname):
 
    print(mastery1.table)
 
+>>>>>>> 2a9d49142fa4a66de12b5557e2171cb382ff449e
 #######################################################################################
  
 
