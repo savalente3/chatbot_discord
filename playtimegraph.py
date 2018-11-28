@@ -1,23 +1,24 @@
-import pygal
+import pandas as pd
+import matplotlib.pyplot as plt
 
-pttimes = []
-ptaskask = input("would you like to add or just check your last graph?")
-    if ptask == "add": 
-        ptadd = int(input("Alright, how many hours did you play"))
+def ptanalysis():
+    pttimes = [0]
+    ptask = input("Would you like to just check your playtime or add?")
+    ptask = ptask.lower()
+    if ptask == "check":
+        ptgraph(pttimes)
+    elif ptask == "add":
+        ptadd = int(input("Alright, how many hours did you play?"))
         pttimes.append(ptadd)
-    elif ptask == "check":
-        ptchart(pttimes)
+        ptgraph(pttimes)
 
 
-
-def ptchart(pttimes):
+def ptgraph(pttimes):
     
-    ptchart = pygal.Line()
-    ptchart.title = 'Your Playtime!'
-    ptchart.x_labels = map(str, range(1, 32))
-    ptchart.add('Hours you have played', pttimes)
+    table = pd.DataFrame(pttimes)
+    ax = table.plot()
+    fig = ax.get_figure()
+    fig.savefig('ptchart.png')
 
-    return ptchart.render_to_png("/tmp/ptcharta.png")
-    
 
-ptchart(pttimes) 
+ptanalysis()
