@@ -148,17 +148,17 @@ def mastery2 (summoner_ID, region_name):
 	response = requests.get(URL_mastery2)
 	data = response.json()
   
-	print ("Your total champion mastery score: ", data)
+	mastery2.result = "Total champion mastery score: " + str(data)
 
  
 
 
 
 
-def matchList(account_ID, region):
+def matchList(account_ID, region_name):
 	#Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
    
-	URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
+	URL_match = "https://" + region_name + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
 	data = pd.read_json(URL_match)
 	data1 = data[0:1]
 	matches = data[0:16]["matches"]
@@ -203,8 +203,8 @@ def matchList(account_ID, region):
 	#print()
  
 	#Total of games
-	print("Total Games")
-	return(print(data1.totalGames))
+	matchList.total_games = "Total Games:" + str(data1.totalGames)
+	
  
       
 #matchList("216952281", "euw1")
@@ -271,61 +271,61 @@ async def on_message(message):
 			table_display = discord.Embed(
 				title = "LOL stats table"
 			)
+'''
 
-			table_display.add_field(name=table, value = table, inline = False)
-			await bot.send_message(message.channel, table, embed = table_display)
+
+'''
+
+list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
 
 
 def mastery1 (summoner_ID, regionname):
  
-   #Get all champion mastery entries sorted by number of champion points descending 
-   URL_mastery1 = "https://" + regionname + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
-   
-   #get the champion name from champion id 
-   URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
+ #get summoner by summoner name
 
-   
-   #get the image of each champion by champion name 
-   championImage = []
-   #URL_championImage = "http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + championImage + ".png"
-   
-   #pandas library: organizes info from API into table 
-   #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
-   data = pd.read_json(URL_mastery1)
-   data1 = pd.read_json(URL_championName)
-   champ = data1 ["data"]
-   #champIM = pd.read_json(URL_championImage)
+	if region in list_of_regions:  
+		URL_summonerbyname = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summoner_Name + "?api_key=" + personalAPI_KEY
+		#http://docs.python-requests.org/en/master/ (exemple on how to use requests lib)
+		response = requests.get(URL_summonerbyname)
+		data = response.json()
+	
 
-   #formating List from json 
-   #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
-   mastery = data[0:15]
+		#print the info and store summoner ID and account ID
+		summoner_ID = (data["id"])
+		account_ID = (data["accountId"])
+		print ("Summoner Level: ", data["summonerLevel"])
+		print ("summoner ID: ", summoner_ID)
+		print ("Account ID: ", account_ID)
+
+		
+
+summonerbyname()
 
 
-   championLevel = mastery.championLevel
-   championPoints = mastery.championPoints
-   tokensEarned = mastery.tokensEarned
-   championId = mastery.championId
-   championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
-   
-   
-   championName = []
-   
-   for id in championId:
-     for i in champ:
-       if str(id) == i["key"]:
-         championName.append(i["name"])
 
-   
-   for i in champ:
-     for id in championId:
-       if i["key"] == str(id):
-        championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
-   
-   
-   mastery1.table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+def mastery1 (summoner_ID):
+ #Get all champion mastery entries sorted by number of champion points descending
+	 
+	 URL_mastery1 = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID+ "?api_key=" + personalAPI_KEY
+		
+		
+	 #pandas library: organizes info from API into table 
+	 #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
+	 data = pd.read_json(URL_mastery1)
 
-   print(mastery1.table)
+	 #formating List from json 
+	 #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
+	 mastery = data[1:16]
+	
 
+	 championLevel = mastery.championLevel
+	 championPoints = mastery.championPoints
+	 tokensEarned = mastery.tokensEarned
+	 championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
+	
+			
+	 table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
+	 print(table)
 #######################################################################################
  
 

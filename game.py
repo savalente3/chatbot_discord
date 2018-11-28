@@ -3,6 +3,7 @@ from lol_api.settings import settings
 import requests
 import json
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 """ Info for APIs KEYS"""
@@ -12,7 +13,7 @@ import pandas as pd
 #API for private project(I've applied, but doesnt work)
 API_KEY = "RGAPI-51bc5f2d-b295-41aa-8c5a-4a7325b195e5"
 #API for developers has durantion of 24h
-personalAPI_KEY = "RGAPI-263c8797-b178-45d8-94f6-01cf7670ff99"
+personalAPI_KEY = "RGAPI-65d69b8f-305e-492d-8dea-da690394c08d"
 
 
 """URL APIs LOL"""
@@ -191,7 +192,7 @@ def mastery2 (summoner_ID):
 mastery2 (str(summoner_ID))
 
 
-def matchList(account_ID, region):
+def matchList(account_ID):
  #Get matchlist for games played on given account ID and platform ID and filtered using given filter parameters, if any
    
  URL_match = "https://" + region + ".api.riotgames.com/lol/match/v3/matchlists/by-account/" + account_ID + "?api_key=" + personalAPI_KEY
@@ -236,14 +237,14 @@ def matchList(account_ID, region):
 
  table = pd.DataFrame({"Champion":championImage, "champion Name": championName,"lane": lane, "season":season, "role": role})
  print (table)
- #print()
+
  
  #Total of games
  print("Total Games")
  print(data1.totalGames)
  
       
-matchList("216952281", "euw1")
+matchList(str(account_ID))
 
 
 

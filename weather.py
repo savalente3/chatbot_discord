@@ -38,3 +38,6 @@ async  def on_message(message):
 
 
 client.run("NTA2NjIyNzQyOTk3NDk5OTA1.DrpTpQ.aMorEgRf0L2l4gECK5YVGGGfFPE")
+
+
+
