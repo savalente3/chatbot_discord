@@ -271,20 +271,16 @@ async def on_message(message):
 			table_display = discord.Embed(
 				title = "LOL stats table"
 			)
+'''
 
-<<<<<<< HEAD
+
 '''
 
 list_of_regions = ["br1","eun1", "euw1", "jp1", "kr", "la1", "la2", "na1", "oc1", "tr1", "ru"]
-=======
-			table_display.add_field(name=table, value = table, inline = False)
-			await bot.send_message(message.channel, table, embed = table_display)
->>>>>>> 2a9d49142fa4a66de12b5557e2171cb382ff449e
 
 
 def mastery1 (summoner_ID, regionname):
  
-<<<<<<< HEAD
  #get summoner by summoner name
 
 	if region in list_of_regions:  
@@ -330,56 +326,6 @@ def mastery1 (summoner_ID):
 			
 	 table = pd.DataFrame({"champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
 	 print(table)
-=======
-   #Get all champion mastery entries sorted by number of champion points descending 
-   URL_mastery1 = "https://" + regionname + ".api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/"+ summoner_ID + "?api_key=" + personalAPI_KEY
-   
-   #get the champion name from champion id 
-   URL_championName = "http://ddragon.leagueoflegends.com/cdn/8.22.1/data/en_US/champion.json" 
-
-   
-   #get the image of each champion by champion name 
-   championImage = []
-   #URL_championImage = "http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + championImage + ".png"
-   
-   #pandas library: organizes info from API into table 
-   #https://pandas.pydata.org/pandas-docs/stable/install.html (used to organanize info into tables)
-   data = pd.read_json(URL_mastery1)
-   data1 = pd.read_json(URL_championName)
-   champ = data1 ["data"]
-   #champIM = pd.read_json(URL_championImage)
-
-   #formating List from json 
-   #https://stackoverflow.com/questions/30522724/take-multiple-lists-into-dataframe
-   mastery = data[0:15]
-
-
-   championLevel = mastery.championLevel
-   championPoints = mastery.championPoints
-   tokensEarned = mastery.tokensEarned
-   championId = mastery.championId
-   championPointsUntilNextLevel = mastery.championPointsUntilNextLevel
-   
-   
-   championName = []
-   
-   for id in championId:
-     for i in champ:
-       if str(id) == i["key"]:
-         championName.append(i["name"])
-
-   
-   for i in champ:
-     for id in championId:
-       if i["key"] == str(id):
-        championImage.append("http://ddragon.leagueoflegends.com/cdn/8.22.1/img/champion/" + i["image"]["full"])
-   
-   
-   mastery1.table = pd.DataFrame({"Champion":championImage,"champion Name":championName, "champion Level": championLevel,"champion Points": championPoints,"tokens Earned": tokensEarned,"championPointsUntilNextLevel": championPointsUntilNextLevel})
-
-   print(mastery1.table)
-
->>>>>>> 2a9d49142fa4a66de12b5557e2171cb382ff449e
 #######################################################################################
  
 

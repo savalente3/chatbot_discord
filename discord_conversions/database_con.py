@@ -11,86 +11,49 @@ import pymysql
 # mrbean_chatbot - database table name
 
 
-def db_con(name, age, height, weight):
+def db_insert(user_id, name, age, height, weight):
     
     con = pymysql.connect("ricky.heliohost.org", "mrbean_admin", "admin123", "mrbean_chatbot")
     cursor = con.cursor()
 
     cursor.execute("SELECT VERSION()")
-    data = cursor.fetchone()
+    db_version = cursor.fetchone()
 
-    # This is the sql code that will be executed
+    # sql_insert inserts data in the database if the user is having a conversation with the bot for the first time
 
-    sql = "INSERT INTO user(name, weight, height, age) VALUES ('%s', '%d', '%d', '%d');"
+    sql_insert = "INSERT INTO user(user_id, name, weight, height, age) VALUES (%s, %s, %s, %s, %s);"
 
-    #check online how to handle except errors, I am getting an error but need to  know what error it is
     try:
-        cursor.execute(sql, (name,weight,height,age))
-        con.commit()
-    except(RuntimeError, TypeError, NameError):
-        pass
-        print("horrible error")
-        con.rollback()
+        user_data = (user_id, name, weight, height, age)
+        cursor.execute(sql_insert, user_data)
+        con.commit
 
-
+    except IOError as e:
+        print(e)
+        con.rollback
 
     con.close()
-    return print("Database version: %s " % data)
+    return print("Database version: %s " % db_version)
 
         
     
-    
-    '''con = pymysql.connect("ricky.heliohost.org", "mrbean_admin", "admin123", "mrbean_chatbot")
-    cursor = con.cursor()
-
-    cursor.execute("SELECT VERSION()")
-    data = cursor.fetchone()
-
-    # This is the sql code that will be executed
-
-    sql = "INSERT INTO user(name, weight, height, age) VALUES ('%s', '%d', '%d', '%d');"
-
-    #check online how to handle except errors, I am getting an error but need to  know what error it is
-    try:
-        cursor.execute(sql)
-        con.commit()
-    except(RuntimeError, TypeError, NameError):
-        pass
-        print("horrible error")
-        con.rollback()
-
-
-
-    con.close()
-    return print("Database version: %s " % data)'''
-
-
-'''
-
-def db_con(name, age, height, weight):
+def db_search(user_id):
     con = pymysql.connect("ricky.heliohost.org", "mrbean_admin", "admin123", "mrbean_chatbot")
-    cursor = con.cursor()
+    cursor = con.cursor
 
-    cursor.execute("SELECT VERSION()")
-    data = cursor.fetchone()
+    # sql_search retrieves data from the database if the user is an existing user
+    sql_search = "SELECT * FROM user WHERE user_id=%s"
 
-    # This is the sql code that will be executed
-
-    sql = "INSERT INTO user(name, weight, height, age) VALUES (%s, %d, %d, %d);"
-
-    #check online how to handle except errors, I am getting an error but need to  know what error it is
     try:
-        cursor.execute(sql, (name,weight,height,age))
-        con.commit()
-    except(RuntimeError, TypeError, NameError):
-        pass
-        print("horrible error")
+        cursor.execute(sql_search, user_id)
+        data = cursor.fetchone()
+        print(data)
+    
+    except IOError as e:
+        print(e)
         con.rollback()
-
-
+    
+    if data != "None":
+        db_search.existing_user = True
 
     con.close()
-    return print("Database version: %s " % data)
-
-
-'''

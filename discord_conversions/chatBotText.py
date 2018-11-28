@@ -17,7 +17,9 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    user_id = message.author.id
     if "hello" in message.content:
+        
         # here make verification if the user already exists in the database by comparing the user id from discord
         # if the user exists then do personalized salute  and skip to menu
         # if not then do the following code
@@ -112,7 +114,7 @@ async def on_message(message):
 
         elif menu_option == 3:
             print("You have chosen option 3")
-
-        database_con.db_con(user_name, user_age, user_height, user_weight)
+            print(user_id)
+        database_con.db_con(user_id, user_name, user_age, user_height, user_weight)
 
 bot.run("NTA2OTgzMDY1NTUwMzIzNzIy.DsEzyg.WzxYWzRFJxxxnuABTNU8Vo8tmLk")
