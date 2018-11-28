@@ -1,30 +1,24 @@
-#Sleep Analysis Function
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def sleepanalysis():
+    sleeptimes = [0]
+    sleepask = input("Would you like to just check your sleep times or add?")
+    sleepask = sleepask.lower()
+    if sleepask == "check":
+        sleepgraph(sleeptimes)
+    elif sleepask == "add":
+        sleepadd = int(input("Alright, how many hours did you sleep?"))
+        sleeptimes.append(sleepadd)
+        sleepgraph(sleeptimes)
 
-    import pygal
 
-    sleeptimes = []
-    sleepask = input("Would you like to add or just check your last graph?")
-        if sleepask == "add": 
-            sleepadd = int(input("Alright, how many hours did you sleep?"))
-            sleeptimes.append(sleepadd)
-        elif sleepask == "check":
-            exchart(extimes)
-
-
-    #Sleep Graph
-    def sleepchart(sleeptimes):
+def sleepgraph(sleeptimes):
     
-        sleepchart = pygal.Line()
-        sleepchart.title = 'Your Sleep Times'
-        sleepchart.x_labels = map(str, range(1, 32))
-        sleepchart.add('Hours you have slept', extimes)
-
-        return sleepchart.render_to_png("/tmp/sleepchart.png")
-    
-
-    sleepchart(sleeptimes)
+    table = pd.DataFrame(sleeptimes)
+    ax = table.plot()
+    fig = ax.get_figure()
+    fig.savefig('sleepchart.png')
 
 
 sleepanalysis()
