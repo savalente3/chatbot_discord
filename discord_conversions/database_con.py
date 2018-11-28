@@ -39,7 +39,7 @@ def db_insert(user_id, name, age, height, weight):
     
 def db_search(user_id):
     con = pymysql.connect("ricky.heliohost.org", "mrbean_admin", "admin123", "mrbean_chatbot")
-    cursor = con.cursor
+    cursor = con.cursor()
 
     # sql_search retrieves data from the database if the user is an existing user
     sql_search = "SELECT * FROM user WHERE user_id=%s"
@@ -47,13 +47,15 @@ def db_search(user_id):
     try:
         cursor.execute(sql_search, user_id)
         data = cursor.fetchone()
-        print(data)
-    
+        if data != None:
+            db_search.existing_user = True
+            db_search.name = data[1]
+        else:
+            db_search.existing_user = False
+            
     except IOError as e:
         print(e)
         con.rollback()
     
-    if data != "None":
-        db_search.existing_user = True
 
     con.close()
