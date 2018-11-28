@@ -45,7 +45,4 @@ async def bitcoin():
     await client.say("Bitcoin price is: $" + value)
 
 
-
-
-
 client.run(TOKEN)

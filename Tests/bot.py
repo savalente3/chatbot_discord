@@ -9,13 +9,13 @@ client = Bot(command_prefix=BOT_PREFIX)
 
 @client.event 
 async def on_ready():     
-    print("I'm in boooooyyyyyy")     
+    print("I'm in boy")     
     print(client.user.name)  
 
 
 @client.command(pass_context=True)
 async def hi(context):
-    blah = 'hi sophia'
+    blah = 'Hi sophia'
     await client.say(blah)
 
     
