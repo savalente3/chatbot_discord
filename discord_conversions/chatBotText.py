@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 import game
+import database_con
 
 menu_options = ["1 - Check LOL stats", "2 - Do Sleep analysis", "3 - test"]
 #regions_list = ['br1', 'eun1', 'euw1', 'jp1', 'kr', 'la1', 'la2', 'na1', 'oc1', 'tr1', 'ru']
@@ -112,5 +113,6 @@ async def on_message(message):
         elif menu_option == 3:
             print("You have chosen option 3")
 
+        database_con.db_con(user_name, user_age, user_height, user_weight)
 
 bot.run("NTA2OTgzMDY1NTUwMzIzNzIy.DsEzyg.WzxYWzRFJxxxnuABTNU8Vo8tmLk")
