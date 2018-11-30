@@ -1,14 +1,14 @@
-import requests
 import random
-from unirest import *
 import json
-import discord
+import requests
 from discord.ext.commands import Bot
+from urllib3 import request
 
 BOT_PREFIX = ("/")
 TOKEN = 'NTA2ODQ5MDgyNjgyMjQ1MTIy.DsH7Xw.kIgqiISbnyugNVUmx5SKo4_jpj0'
 
 client = Bot(command_prefix=BOT_PREFIX)
+players = {}
 
 @client.event
 async def on_ready():
@@ -19,7 +19,7 @@ async def on_ready():
 
 
 '''picks advice at random to give to the user upon request'''
-@client.command
+@client.command(pass_context=True)
 async def advice(context):
     possible_responses = [
         'Try to cut out carbs from your diet and start eatign healthy fats, this will help you lose weight.',
@@ -40,43 +40,53 @@ async def any_question(message):
              "No, you imbecile"]
         await client.send_message(message.channel, random.choice(z))
 
-
+'''spoonacular.com/food-api'''
 ''' uses api to give client a diet plan for a given amount of time'''
-@client.command
-async def diet(context):
+@client.command(pass_context=True)
+async def diet(message):
     duration = input("For how long do you want the plan for?")
     not_wanted = input("What foods do you not want?")
-    diet_type = input("What type of diet do you want?")
-    calories_1 = input("What's your target calorie intake?")
-    await client.say(__get_meal_plan(duration,not_wanted, diet_type,calories_1))
+    diet_type = input("What type of diet do you want? e.g. vegan, paleo...")
+    calories = input("What's your target calorie intake?")
+    url =  ('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/mealplans/generate?diet=' + diet_type + '&exclude=' + not_wanted + '&targetCalories=' + calories + '&timeFrame=' + duration + api_key)
+    response = requests.get(url).json()
+
+    await client.say((response) + ", " +  message.author.mention)
 
 
-'''answers natural language questions about nutrition through api'''
-@client.command
-async def naturallang(message):
-    foodtalk = input("Ok what food what would you like")
-    response = requests.post("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/detect",
-        headers={
-            "X-Mashape-Key": "MW9KxpoKoUmshQSIApQ4c0AxPvRup1mdr73jsnzZuOH9Xy8ecv",
-            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-            "Content-Type": "application/x-www-form-urlencoded"
-            },
-            params={
-                "text": foodtalk
-                }
-                )
-    await client.say(response)
+#answers natural language questions about nutrition through api
+
+@client.command(pass_context=True)
+async def nat(message):
+    foodtalk = input(client.send_message(message.channel, "Ok what food what would you like"))
+    user_input = {eMW9KxpoKoUmshQSIApQ4c0AxPvRup1mdr73jsnzZuOH9Xy8ecv: foodtalk}
+    response = requests.post("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/detect", params = user_input)
+
+    await client.say((response + ", " + message.author.mention))
 
 
-'''Gives random food trivia on request'''
-@client.command
-async def food_trivia(message):
-response = requests.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/trivia/random",
-  headers={
-    "X-Mashape-Key": "MW9KxpoKoUmshQSIApQ4c0AxPvRup1mdr73jsnzZuOH9Xy8ecv",
-    "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-  }
-)
+#enters the channel
+@client.command(pass_context=True)
+async def join(mate):
+    channel = mate.message.auther.voice.voice_channel
+    await client.join_voice_channel(channel)
+
+#leaves the channel
+@client.command(pass_context=True)
+async def leave(rgb):
+    server = rgb.message.server
+    voice_client = client.voice_client_in(server)
+    awair voice_client.disconnect()
+
+
+#plays music
+@client.command(pass_context=True)
+async def play(ctx,url):
+    server = ctx.message.server
+    voice_client = client.voice_client_in(server)
+    player = await voice_client.create_ytdl_player(url)
+    players = [server.id] = player
+    player.start()
 
 
 client.run(TOKEN)
