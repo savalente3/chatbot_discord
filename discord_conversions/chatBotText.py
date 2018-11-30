@@ -1,20 +1,30 @@
-# Import of discord's API
+'''
+Quick Disclaimer:
+I learned the basics on how to setup a discord bot on this webpage https://www.devdungeon.com/content/make-discord-bot-python
+The ends and beginnnings of the code from the tutorial are commented, but I am capable of explaining every line 
+of code on this project.
+'''
+# Beginning of tutorial code
 import discord
 from discord.ext import commands
+# End of tutorial code
 import asyncio
 # Import of files containing LOL API and database connection code 
 import game
 import database_con
 
-menu_options = ["1 - Update your data", "2 - Check LOL stats", "3 - Do Sleep analysis", "3 - Check"]
+menu_options = ["1 - Update your data", "2 - Check LOL stats", "3 - Do Sleep analysis", "4 - Check"]
 regions_list = game.regions_list
+# Beginning of tutorial code - I have adapted this code
 bot = commands.Bot(command_prefix = '#')
 
 @bot.event
 async def on_ready():
-    print("The BOT IS READY!")
+    print("GHP is awake!")
     print(bot.user.name)
     print(bot.user.id)
+
+# End of tutorial code
 
 @bot.event
 async def on_message(message):

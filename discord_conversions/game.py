@@ -1,4 +1,8 @@
-#In this file the code is being edited in order to work on the discord chat instead of the terminal
+'''
+I made changes to the code in this file and adapted it, so it works on discord chat instead
+of the terminal. To see the changes that have been made, please check game.py on the root folder "CHATBOT"
+
+'''
 
 from lol_api.settings import settings
 import requests
@@ -207,8 +211,7 @@ def matchList(account_ID, region_name):
 	
  
       
-#matchList("216952281", "euw1")
-
+# The code commented bellow this line is the result of my first attempt of making the game.py code work on discord, it was not efficient so I improved it
 
 '''
 @bot.event
