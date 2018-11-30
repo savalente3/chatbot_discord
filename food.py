@@ -76,7 +76,7 @@ async def join(mate):
 async def leave(rgb):
     server = rgb.message.server
     voice_client = client.voice_client_in(server)
-    awair voice_client.disconnect()
+    await voice_client.disconnect()
 
 
 #plays music
