@@ -9,6 +9,11 @@
    ],
    "python.unitTest.pyTestEnabled": false,
    "python.unitTest.nosetestsEnabled": false,
+<<<<<<< HEAD
    "python.unitTest.unittestEnabled": true,
    "python.linting.pylintEnabled": true
+=======
+   "python.unitTest.unittestEnabled": false,
+   "python.unitTest.promptToConfigure": false
+>>>>>>> 0b0a85d328d996367752cc43e3f5c7cf4e222a17
 }

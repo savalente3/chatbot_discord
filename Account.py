@@ -1,4 +1,4 @@
-##i managed to fuck up a while loop on line 39 and have no idea why its doing an endless loop...
+
 #Defining function Account#
 def Account():
     name = str(input("Tell me about yourself, what is your name? "))

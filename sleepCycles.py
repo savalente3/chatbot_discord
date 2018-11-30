@@ -44,9 +44,17 @@ def sleepW():
  print("7h and 30 min of sleep:", W5C)
  print("9h of sleep:", W6C)
 
+ 
+ 
+ 
  return  W3C, W4C, W5C, W6C
 
+
 sleepW()
+print("How many hours are you to sleep?")
+sleep = input()
+
+
 
 
 """Calculates the time you should go to sleep to wake up at a certain time"""
@@ -89,6 +97,13 @@ def sleepB():
 
  return  W3C, W4C, W5C, W6C
 
+
 sleepB()
+print("How many hours are you to sleep?")
+sleepB.sleep = input()
+
+
+
+
 
 
