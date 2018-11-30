@@ -12,7 +12,8 @@ import asyncio
 # Import of files containing LOL API and database connection code 
 import game
 import database_con
-
+i = 0
+salute_list = ["Hello", "Hi", "Alo", "hi", "hello", "alo"]
 menu_options = ["1 - Update your data", "2 - Check LOL stats", "3 - Do Sleep analysis", "4 - Check"]
 regions_list = game.regions_list
 # Beginning of tutorial code - I have adapted this code
@@ -29,7 +30,13 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     user_id = message.author.id
-    if "hello" in message.content:
+    for i in range(len(salute_list)):
+        if salute_list[i] in message.content:
+            salute = True
+        else:
+            salute = False
+        i+=1
+    if salute == True:
         #here a check is done in the database to see if the user already exists
         database_con.db_search(user_id)
         if database_con.db_search.existing_user == True:
