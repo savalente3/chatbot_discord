@@ -1,2 +1,7 @@
 # ChatBot
-chatbot
+
+The discord chatbot was designed to meet the needs of gamers and help them lead a healthier life. The gamer is presented with a menu after he completes the account details, which will be stored in a database. The purpose of the database is to gather the user’s information for later use in the chatbot features.
+
+Several options are displayed on the menu such as information relating to sleep cycles, league of legends stats, steam information about the games being played, information about food and calorie intake, recommendations about exercise workouts according to weather predictions, YouTube music to listen to during countless gaming sessions, break recommendations from gaming sessions after 2 hours of play and a daily report to keep the user aware of his progress.
+
+The League of Legends game stats were developed based on five Riot APIs. The first API intends to retrieve the League of legends account id, summoner id and summoner level by proving the region server and the gamer summoner name. The second API in conjunction with dragon API, also from Riot games, creates a table with all the champions mastery entries sorted by champion points. In this table, it is possible to analyse the information on each champion, such as the champion names and the champion image profile, level, champion points, tokens earned and the champion points until the next level. The third LOL API gives the player the total champion mastery score based on the information provided by the second API, summoner id. The Last API creates a table of match lists for games played.
